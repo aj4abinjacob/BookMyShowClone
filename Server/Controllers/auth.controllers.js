@@ -1,4 +1,5 @@
 const User = require("../Models/user.model");
+const bcrypt = require("bcrypt");
 
 const onLogin = async(req, res) => {
     const {email, password} = req.body;
@@ -7,12 +8,16 @@ const onLogin = async(req, res) => {
         return res.status(400).json({ message: "All fields are required" });
     }
 
+
+
     try {
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: "User not found. Please register!" });
         }
-        if (user.password !== password) {
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
         console.log("User logged in successfully:", user);
@@ -40,7 +45,15 @@ const onLogin = async(req, res) => {
         if (user) {
             return res.status(400).json({ message: "User already exists" });
         }
-        const newUser = new User({ name, email, password });
+
+        // Hash the password before saving
+        const salt = await bcrypt.genSalt(10);
+        req.body.password = await bcrypt.hashSync(password, salt);
+
+        
+
+        // console.log("Hashed password:", hashedPassword); // Log the hashed password
+        const newUser = new User(req.body);
         await newUser.save();
         console.log("User registered successfully:", newUser);
         return res.status(201).json({ message: "User registered successfully", user: newUser });
