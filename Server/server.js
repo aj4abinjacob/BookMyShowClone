@@ -15,6 +15,11 @@ mongoose.connect(dbUrl).then(() => {
 }
 );
 
+app.use(express.json());
+
+const authRoutes = require("./Routes/auth.routes");
+authRoutes(app);
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
