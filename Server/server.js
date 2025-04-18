@@ -1,11 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT;
 const dbUrl = process.env.DB_URL;
 
+// Middleware to parse JSON bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 mongoose.connect(dbUrl).then(() => {
     console.log("MongoDB connected");
@@ -14,8 +18,6 @@ mongoose.connect(dbUrl).then(() => {
     console.log("MongoDB connection error:", err);
 }
 );
-
-app.use(express.json());
 
 const authRoutes = require("./Routes/auth.routes");
 authRoutes(app);
