@@ -1,8 +1,28 @@
 const User = require("../Models/user.model");
 
-const onLogin = (req, res) => {
-    console.log("Login request received");
-    res.json({ message: "Login successful" }); // Add a response
+const onLogin = async(req, res) => {
+    const {email, password} = req.body;
+    
+    if (!email || !password) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "User not found. Please register!" });
+        }
+        if (user.password !== password) {
+            return res.status(400).json({ message: "Invalid credentials" });
+        }
+        console.log("User logged in successfully:", user);
+        return res.status(200).json({ message: "User logged in successfully", user });
+    }
+    catch (error) {
+        console.error("Error checking user credentials:", error);
+        return res.status(500).json({ message: "Server error" });
+    }
+
   };
   
   const onRegister = async (req, res) => {
