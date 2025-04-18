@@ -4,7 +4,7 @@ import { Input, Form, Button, Card, Typography } from 'antd';
 
 const { Title } = Typography;
 
-const LoginForm = () => {
+const Login = () => {
   return (
     <div style={{ 
       display: 'flex', 
@@ -13,7 +13,7 @@ const LoginForm = () => {
       minHeight: '100vh',
       padding: '20px'
     }}>
-      <Card className="w-full max-w-md shadow-md">
+      <Card className="shadow-md" style={{ width: '500px' }}> 
         {/* Header Section with the Book My Show branding */}
         <div 
           style={{ 
@@ -94,4 +94,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default Login;
