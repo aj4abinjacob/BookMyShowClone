@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Input, Form, Button, Card, Typography } from 'antd';
+import { RegisterUser } from '../../calls/user';
 
 const { Title } = Typography;
 
 
-const Register = () => {
-  const handleRegister = (values) => {
-    // TODO: Add API integration later
-    console.log('Form values:', values);
+const handleRegister = () => {
+  const onRegister = async (values) => {
+    console.log("Registering user with data:", values);
+    RegisterUser(values);
   }
 
   return (
@@ -42,7 +43,7 @@ const Register = () => {
             name="book-my-show-register"
             layout="vertical"
             requiredMark={false}
-            onFinish={handleRegister}
+            onFinish={onRegister}
           >
             {/* Name field */}
             <Form.Item
@@ -122,4 +123,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default handleRegister;
