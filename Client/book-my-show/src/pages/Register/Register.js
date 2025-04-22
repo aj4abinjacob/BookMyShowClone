@@ -8,7 +8,6 @@ const { Title } = Typography;
 
 const handleRegister = () => {
   const onRegister = async (values) => {
-    console.log("Registering user with data:", values);
     RegisterUser(values);
   }
 

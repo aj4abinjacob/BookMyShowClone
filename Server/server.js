@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 require('dotenv').config();
 
 const app = express();
@@ -10,6 +11,7 @@ const dbUrl = process.env.DB_URL;
 // Middleware to parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 mongoose.connect(dbUrl).then(() => {
     console.log("MongoDB connected");

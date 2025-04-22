@@ -1,5 +1,14 @@
 
-export function RegisterUser(data) {
+import { axiosInstance } from ".";
+
+export async function RegisterUser(data) {
     console.log("Registering user with data:", data);
+    try{
+        const response = await axiosInstance.post("http://localhost:8000/register", data);
+        console.log("User registered successfully:", response.data);
+
+    }catch (error) {
+        console.error("Error registering user:", error);
+    }
 
 }
