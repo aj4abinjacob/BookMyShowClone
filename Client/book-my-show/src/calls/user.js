@@ -6,9 +6,11 @@ export async function RegisterUser(data) {
     try{
         const response = await axiosInstance.post("http://localhost:8000/register", data);
         console.log("User registered successfully:", response.data);
+        return response;
 
     }catch (error) {
         console.error("Error registering user:", error);
+        return error.response;
     }
 
 }

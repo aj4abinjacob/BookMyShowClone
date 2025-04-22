@@ -1,17 +1,33 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Input, Form, Button, Card, Typography } from 'antd';
+import { Input, Form, Button, Card, Typography, message } from 'antd';
 import { RegisterUser } from '../../calls/user';
 
 const { Title } = Typography;
 
 
-const handleRegister = () => {
+
+const Register = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const onRegister = async (values) => {
-    RegisterUser(values);
+    const response = await RegisterUser(values);
+    console.log("Response from RegisterUser:", response);
+    if (response.status === 201) {
+      messageApi.success("Registration successful! Please login.");
+      console.log("User registered successfully:", response.data);
+      // Redirect to login page or show success message
+    }
+    else {
+      messageApi.error("Registration failed. Please try again.");
+      console.error("Error registering user:", response.data);
+      // Show error message
+    }
   }
 
   return (
+
+    
     <div style={{ 
       display: 'flex', 
       justifyContent: 'center', 
@@ -19,6 +35,8 @@ const handleRegister = () => {
       minHeight: '100vh',
       padding: '20px'
     }}>
+      {contextHolder}
+
       <Card className="shadow-md" style={{ width: '500px' }}>
         {/* Red header section like the one in Login, following the same login pattern*/}
         <div 
@@ -122,4 +140,4 @@ const handleRegister = () => {
   );
 };
 
-export default handleRegister;
+export default Register;
