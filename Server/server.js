@@ -22,7 +22,9 @@ mongoose.connect(dbUrl).then(() => {
 );
 
 const authRoutes = require("./Routes/auth.routes");
+const movieRoutes = require("./Routes/movies.routes");
 authRoutes(app);
+movieRoutes(app);
 
 
 app.listen(port, () => {
