@@ -55,19 +55,7 @@ const Register = () => {
                 placeholder="Enter your full name"
               />
             </Form.Item>
-            
-            {/* User ID field */}
-            <Form.Item
-              label="User ID"
-              name="userId"
-              className="d-block"
-              rules={[{ required: true, message: "User ID is required" }]}
-            >
-              <Input
-                placeholder="Choose a unique user ID"
-              />
-            </Form.Item>
-            
+                        
             {/* Email field */}
             <Form.Item
               label="Email"
