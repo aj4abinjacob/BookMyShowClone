@@ -1,5 +1,6 @@
 const User = require("../Models/user.model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const onLogin = async(req, res) => {
     const {email, password} = req.body;
@@ -21,7 +22,13 @@ const onLogin = async(req, res) => {
             return res.status(400).json({ message: "Invalid credentials" });
         }
         console.log("User logged in successfully:", user);
-        return res.status(200).json({ message: "User logged in successfully", user });
+        var token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+            algorithm: "HS256"
+        });
+        console.log("Generated JWT token:", token);
+
+
+        return res.status(200).json({ message: "User logged in successfully",  success: true, token: token, user: { id: user._id, name: user.name, email: user.email } });
     }
     catch (error) {
         console.error("Error checking user credentials:", error);
