@@ -12,16 +12,17 @@ const Login = () => {
       console.log("Response from LoginUser:", response);
       if (response.status === 200) {
         messageApi.success("Login successful!");
+        window.location.href = "/";
         console.log("User logged in successfully:", response.data);
         // Redirect to home page or show success message
       }
       else {
-        messageApi.error("Login failed. Please try again.");
+        messageApi.error(response.data.message);
         console.error("Error logging in user:", response.data);
         // Show error message
       }
     } catch (error) {
-      messageApi.error("An error occurred during login.");
+      messageApi.error(error.message);
       console.error("Login error:", error);
     }
     

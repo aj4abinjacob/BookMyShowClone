@@ -16,6 +16,7 @@ const Register = () => {
     if (response.status === 201) {
       messageApi.success("Registration successful! Please login.");
       console.log("User registered successfully:", response.data);
+      window.location.href = "/login";
       // Redirect to login page or show success message
     }
     else {
