@@ -14,3 +14,16 @@ export async function RegisterUser(data) {
     }
 
 }
+
+export async function LoginUser(data) {
+    console.log("Logging in user with data:", data);
+    try{
+        const response = await axiosInstance.post("http://localhost:8000/login", data);
+        console.log("User logged in successfully:", response.data);
+        return response;
+
+    }catch (error) {
+        console.error("Error logging in user:", error);
+        return error.response;
+    }
+}

@@ -1,10 +1,31 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Input, Form, Button, Card, Typography } from 'antd';
-
+import { Input, Form, Button, Card, Typography, message } from 'antd';
+import { LoginUser } from '../../calls/user'; 
 const { Title } = Typography;
 
 const Login = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const onLogin = async (values) => {
+    try {
+      const response = await LoginUser(values);
+      console.log("Response from LoginUser:", response);
+      if (response.status === 200) {
+        messageApi.success("Login successful!");
+        console.log("User logged in successfully:", response.data);
+        // Redirect to home page or show success message
+      }
+      else {
+        messageApi.error("Login failed. Please try again.");
+        console.error("Error logging in user:", response.data);
+        // Show error message
+      }
+    } catch (error) {
+      messageApi.error("An error occurred during login.");
+      console.error("Login error:", error);
+    }
+    
+  }
   return (
     <div style={{ 
       display: 'flex', 
@@ -13,6 +34,7 @@ const Login = () => {
       minHeight: '100vh',
       padding: '20px'
     }}>
+      {contextHolder}
       <Card className="shadow-md" style={{ width: '500px' }}> 
         {/* Header Section with the Book My Show branding */}
         <div 
@@ -36,6 +58,7 @@ const Login = () => {
             name="book-my-show-login"
             layout="vertical"
             requiredMark={false}
+            onFinish={onLogin}
           >
             <Form.Item
               label="Email"
