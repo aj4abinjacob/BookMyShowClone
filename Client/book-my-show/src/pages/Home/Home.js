@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { getAllMovies } from "../../calls/movies";
+import MovieList from "../../Components/MovieList";
 function Home() {
 
 
@@ -19,6 +20,7 @@ function Home() {
     <div>
       <h1>Home</h1>
       <p>Welcome to the Book My Show clone!</p>
+      <MovieList/>
     </div>
   );
 }
