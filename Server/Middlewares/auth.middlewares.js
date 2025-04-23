@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../Models/user.model");
 
 const verifyToken = (req, res, next) => {
     console.log("Verifying token...");
@@ -14,18 +15,41 @@ const verifyToken = (req, res, next) => {
         return res.status(403).json({ message: "No token provided" });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) {
             console.error("Token verification error:", err);
             return res.status(403).json({ message: "Failed to authenticate token" });
         }
 
         console.log("Token verified successfully:", decoded);
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        req.user = user;
         req.userId = decoded.id;
+
+
         next();
     });
 }
 
+const verifyAdmin = (req, res, next) => {
+
+    console.log("Verifying admin...");
+
+    console.log("Request user:", req.user);
+
+    if (req.user.role !== "admin") {
+        return res.status(403).json({ message: "Require admin role" });
+    }
+    console.log("Admin verified successfully");
+    
+    next();
+
+}
+
 module.exports = {
-    verifyToken
+    verifyToken,
+    verifyAdmin
 }
