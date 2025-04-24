@@ -49,7 +49,23 @@ const verifyAdmin = (req, res, next) => {
 
 }
 
+const verifyAdminOrPartner = (req, res, next) => {
+    console.log("Verifying admin or partner...");
+    console.log("Request user:", req.user);
+    console.log("Request user role:", req.user.role);
+
+    if (req.user.role !== "partner" && req.user.role !== "admin") {
+        return res.status(403).json({ message: "Require admin or partner role" });
+    }
+
+    console.log("Admin or partner verified successfully");
+    next();
+}
+
+
+
 module.exports = {
     verifyToken,
-    verifyAdmin
+    verifyAdmin,
+    verifyAdminOrPartner
 }
