@@ -60,8 +60,30 @@ const updateMovieById = async (req, res) => {
     }
 }
 
+const deleteMovieById = async (req, res) => {
+    const movieId = req.params.id;
+
+    try{
+        if(!mongoose.Types.ObjectId.isValid(movieId)){
+            return res.status(400).json({ message: "Invalid movie ID" });
+        }
+        const deletedMovie = await MovieModel.findByIdAndDelete(movieId);
+        if (!deletedMovie) {
+            return res.status(404).json({ message: "Movie not found" });
+        }
+        console.log("Movie deleted:", deletedMovie);
+        return res.status(200).json({ message: "Movie deleted successfully", movie: deletedMovie });
+    }catch(err){
+        console.error("Error deleting movie:", err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
+
 module.exports = {
     getAllMovies,
     createNewMovie,
-    updateMovieById
+    updateMovieById,
+    deleteMovieById
 }
