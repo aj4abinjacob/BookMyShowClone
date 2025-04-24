@@ -38,5 +38,5 @@ const theatreSchema = new mongoose.Schema({
 
 
 }, { timestamps: true });
-const TheatreModel = mongoose.model('Theatre', theatreSchema);
+const TheatreModel = mongoose.model('theatre', theatreSchema);
 module.exports = TheatreModel;
