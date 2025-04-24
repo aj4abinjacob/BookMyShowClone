@@ -24,10 +24,12 @@ mongoose.connect(dbUrl).then(() => {
 const authRoutes = require("./Routes/auth.routes");
 const movieRoutes = require("./Routes/movies.routes");
 const theatreRoutes = require("./Routes/theatre.routes");
+const showRoutes = require("./Routes/show.routes");
 
 authRoutes(app);
 movieRoutes(app);
 theatreRoutes(app);
+showRoutes(app);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
