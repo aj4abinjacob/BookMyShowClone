@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const MovieModel = require("../Models/Movie.model");
 
 const getAllMovies = async (req, res) => {
@@ -35,8 +36,28 @@ const createNewMovie = async (req, res) => {
 }
 
 const updateMovieById = async (req, res) => {
-    console.log("Update movie data:", req.body);
-    return res.status(200).json({ message: "Movie updated successfully" });
+    const movieId = req.params.id;
+
+    
+   
+    try{
+        if(!mongoose.Types.ObjectId.isValid(movieId)){
+            return res.status(400).json({ message: "Invalid movie ID" });
+        }
+        const movie = await MovieModel.findById(movieId);
+        if (!movie) {
+            return res.status(404).json({ message: "Movie not found" });
+        }
+        const upddatedMovie = await MovieModel.findByIdAndUpdate(movieId, req.body, { new: true });
+        if (!upddatedMovie) {
+            return res.status(500).json({ message: "Failed to update movie" });
+        }
+        console.log("Movie updated:", upddatedMovie);
+        return res.status(200).json({ message: "Movie updated successfully", movie: upddatedMovie });
+    }catch(err){
+        console.error("Error updating movie:", err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
 }
 
 module.exports = {
