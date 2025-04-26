@@ -27,27 +27,6 @@ function NavBar() {
         </div>
       </Header>
 
-      <Content style={{ padding: '0 48px' }}>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        <div
-          style={{
-            background: "black",
-            minHeight: 280,
-            padding: 24,
-            borderRadius: "5px",
-          }}
-        >
-          Content
-        </div>
-      </Content>
-
-      <Footer style={{ textAlign: 'center' }}>
-        Book My Show ©
-      </Footer>
     </Layout>
   );
 }
