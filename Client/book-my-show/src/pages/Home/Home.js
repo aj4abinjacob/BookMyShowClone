@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { getAllMovies } from "../../calls/movies";
 import MovieList from "../../Components/MovieList";
+import NavBar from "../../Components/NavBar/NavBar";
 function Home() {
 
 
@@ -18,8 +19,11 @@ function Home() {
   
   return (
     <div>
-      <h1>Home</h1>
-      <p>Welcome to the Book My Show clone!</p>
+      <NavBar/>
+      <h1>Book My Show</h1>
+      <h2>Welcome to the Book My Show clone!</h2>
+      <p>Explore the latest movies and book your tickets online.</p>
+      <h2>Featured Movies</h2>
       <MovieList/>
     </div>
   );
