@@ -17,11 +17,6 @@ function NavBar() {
         <h3 style={{ color: 'white', margin: 0, flex: 'none', marginRight: '20px' }}>Book My Show</h3>
 
         <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-          <Search
-            placeholder="Search Movies"
-            onSearch={(value) => console.log(value)}
-            style={{ maxWidth: 300, marginRight: 20 }}
-          />
           <Menu
             theme="dark"
             mode="horizontal"
