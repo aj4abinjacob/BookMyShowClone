@@ -47,34 +47,25 @@ const getTheatersAndShowsByMovieId = async (req, res) => {
     console.log("Fetching shows")
     const {movieId} = req.params;
     const {date} = req.query;
-
     try {
-        let allShows = await ShowModel.find({ movie: movieId, date: date })
-          .populate("theatre")
-          .populate("movie");
-        
-        console.log("All shows fetched:", allShows);
-        
-        if (allShows && allShows.length > 0) {
-          return res.status(200).json({ 
-            success: true, 
-            message: `All shows fetched for movie ID ${movieId} and date ${date}`,
-            shows: allShows
-          });
-        } else {
-          return res.status(404).json({
-            success: false,
-            message: `No shows found for movie ID ${movieId} and date ${date}`
-          });
-        }
-      } catch (err) {
-        console.error("Error fetching shows:", err);
-        return res.status(500).json({
-          success: false,
-          message: "Internal server error"
-        });
-      }
-}
+      let allShows = await ShowModel.find({ movie: movieId, date: date })
+        .populate("theatre")
+        .populate("movie");
+      console.log("All shows fetched:", allShows);
+      
+      return res.status(200).json({
+        success: true,
+        message: `Shows fetched for movie ID ${movieId} and date ${date}`,
+        shows: allShows || []
+      });
+    } catch (err) {
+      console.error("Error fetching shows:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error"
+      });
+    }
+  }
 
 module.exports = {
     createNewShow,
