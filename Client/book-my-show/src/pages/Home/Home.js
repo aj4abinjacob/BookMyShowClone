@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { getAllMovies } from "../../calls/movies";
 import MovieList from "../../Components/MovieList";
 import NavBar from "../../Components/NavBar/NavBar";
+import { Input, Row, Col } from "antd";
 function Home() {
 
 
@@ -20,6 +21,11 @@ function Home() {
   return (
     <div>
       <NavBar/>
+      <Row style={{justifyContent:"center",marginTop:"20px"}} className="d-flex justify-content-center w-100">
+        <Col lg={{span:12}} xs={{span:24}} >
+        <Input placeholder="Type here to search for movies" />
+        </Col>
+      </Row>
       <h1>Book My Show</h1>
       <h2>Welcome to the Book My Show clone!</h2>
       <p>Explore the latest movies and book your tickets online.</p>
