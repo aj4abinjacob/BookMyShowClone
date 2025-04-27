@@ -3,20 +3,30 @@ import { getAllMovies } from "../../calls/movies";
 import MovieList from "../../Components/MovieList";
 import NavBar from "../../Components/NavBar/NavBar";
 import { Input, Row, Col } from "antd";
+import { useState } from "react";
+
 function Home() {
 
+  const [movies, setMovies] = useState([]);  // Initialize as empty array instead of null
+  const [loading, setLoading] = useState(true);  // Add loading state
 
-  const fetchMovies = async() => {
-    const response = await getAllMovies();
-    if (response.status === 200) {
-      console.log("Movies fetched successfully:", response.data);
-    } else {
-      console.error("Error fetching movies:", response);
+  const fetchMovies = async () => {
+    try {
+      setLoading(true);
+      const response = await getAllMovies();
+      // Make sure you're accessing the data correctly based on your API response
+      setMovies(response.data.movies); // Changed from response.data.data to response.data.movies
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+      setLoading(false);
     }
-  }
+  };
+
   useEffect(() => {
     fetchMovies();
   }, []);
+  
   
   return (
     <div>
@@ -26,11 +36,35 @@ function Home() {
         <Input placeholder="Type here to search for movies" />
         </Col>
       </Row>
-      <h1>Book My Show</h1>
-      <h2>Welcome to the Book My Show clone!</h2>
-      <p>Explore the latest movies and book your tickets online.</p>
-      <h2>Featured Movies</h2>
-      <MovieList/>
+      <Row>
+        {movies.length > 0 &&
+          movies.map((movie) => (
+            <Col
+              key={movie._id} // MongoDB gives `_id`
+              lg={{ span: 6 }}
+              xs={{ span: 12 }}
+              style={{ marginTop: "20px" }}
+            >
+              <div className="movie-card">
+                <img
+                  src={movie.poster}
+                  alt={movie.movieName}
+                  style={{ width: "100%", height: "300px", objectFit: "cover" }}
+                />
+                <h3>{movie.movieName}</h3>
+                <p>{movie.description}</p>
+                <p>Genre: {movie.genre.join(", ")}</p> {/* genre is an array */}
+                <p>Duration: {movie.duration} minutes</p>
+                <p>Language: {movie.language}</p>
+                <p>
+                  Release Date:{" "}
+                  {new Date(movie.releaseDate).toLocaleDateString()}
+                </p>
+              </div>
+            </Col>
+          ))}
+      </Row>
+
     </div>
   );
 }
