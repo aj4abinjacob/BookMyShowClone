@@ -39,7 +39,7 @@ function Home() {
         <Input placeholder="Type here to search for movies" />
         </Col>
       </Row>
-      <Row>
+      <Row gutter={[16, 24]} style={{ marginTop: "20px", marginLeft: "20px", marginRight: "20px", marginBottom: "20px" }}>
         {loading ? (
           <Col span={24} style={{ textAlign: 'center', marginTop: '50px' }}>
             Loading movies...
