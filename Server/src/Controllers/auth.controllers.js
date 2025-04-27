@@ -94,6 +94,11 @@ const onLogin = async(req, res) => {
         const otp = otpGenerator();
         console.log("Generated OTP:", otp);
 
+        user.otp = otp;
+        user.otpExpiry =  Date.now() + 2 * 60 * 1000;
+
+        await user.save();
+
         sendEmail([user.email], "Reset Password for BookMyShow Clone", otpScript(user.name, user.email, otp))
 
         return res.status(200).json({ success: true, message: `Otp Sent Successfully on email id ${email}`});
@@ -112,9 +117,68 @@ const onLogin = async(req, res) => {
   }
 
 
+  const onResetPassword = async (req, res) => {
+    const { email, otp, password } = req.body;
+    
+    if (!email || !otp || !password) {
+      return res.status(400).json({ 
+        success: false,
+        message: "All fields are required" 
+      });
+    }
+    
+    try {
+      const user = await User.findOne({ email });
+      
+      if (!user) {
+        return res.status(400).json({ 
+          success: false,
+          message: "User not found" 
+        });
+      }
+      
+      if (Date.now() > user.otpExpiry) {
+        return res.status(404).json({
+          success: false,
+          message: "OTP has expired"
+        });
+      }
+      
+      if (user.otp !== otp) {
+        return res.status(400).json({ 
+          success: false,
+          message: "Invalid OTP" 
+        });
+      }
+      
+      // Hash the new password before saving
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+      user.otp = null; // Clear the OTP after successful reset
+      user.otpExpiry = null; // Clear the OTP expiry
+      
+      await user.save();
+      
+      console.log("Password reset successfully for user:", user.email);
+      
+      return res.status(200).json({ 
+        success: true,
+        message: "Password reset successfully" 
+      });
+    } catch (error) {
+      console.error("Error resetting password:", error);
+      return res.status(500).json({ 
+        success: false,
+        message: "Server error" 
+      });
+    }
+  };
+
+
   
   module.exports = {
     onLogin,
     onRegister,
-    onForgetPassword
+    onForgetPassword,
+    onResetPassword
   };

@@ -1,29 +1,27 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input, Form, Button, Card, Typography } from 'antd';
-import { ForgotPassword } from '../../calls/user'; 
+import { ForgotPassword } from '../../calls/user';
 import { message } from 'antd';
-
 
 const { Title } = Typography;
 
-
 const ForgetPassword = () => {
-const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
+  const navigate = useNavigate();
 
-    const onForgot = async (values) => {
-        const response = await ForgotPassword(values);
-        if (response.data.success) {
-          messageApi.success(response.data.message);
-        //   window.location.href = "/login";
-          // Redirect to login page or show success message
-        }
-        else {
-          console.log(response);
-          messageApi.error(response.data.message);
-          // Show error message
-        }
-      }
+  const onForgot = async (values) => {
+    const response = await ForgotPassword(values);
+    if (response.data.success) {
+      messageApi.success(response.data.message);
+      // Redirect to reset password page with email parameter
+      navigate(`/reset-password?email=${encodeURIComponent(values.email)}`);
+    }
+    else {
+      console.log(response);
+      messageApi.error(response.data.message);
+    }
+  }
 
   return (
     <div style={{
@@ -33,7 +31,7 @@ const [messageApi, contextHolder] = message.useMessage();
       minHeight: '100vh',
       padding: '20px'
     }}>
-        {contextHolder}
+      {contextHolder}
       <Card className="shadow-md" style={{ width: '500px' }}>
         <div
           style={{
@@ -49,7 +47,6 @@ const [messageApi, contextHolder] = message.useMessage();
             Forget Password
           </Title>
         </div>
-        
         <div style={{ padding: '24px 0' }}>
           <Form
             name="book-my-show-forgot-password"
@@ -63,10 +60,9 @@ const [messageApi, contextHolder] = message.useMessage();
               name="email"
               className="d-block"
               rules={[
-                { required: true, message: "Email is required" }, 
+                { required: true, message: "Email is required" },
                 { type: 'email', message: 'Please enter a valid email' }
               ]}
-              
             >
               <Input
                 id="email"
@@ -74,7 +70,6 @@ const [messageApi, contextHolder] = message.useMessage();
                 placeholder="Enter your Email"
               />
             </Form.Item>
-            
             <Form.Item className="d-block">
               <Button
                 type="primary"
@@ -90,7 +85,6 @@ const [messageApi, contextHolder] = message.useMessage();
               </Button>
             </Form.Item>
           </Form>
-          
           <div style={{ textAlign: 'center', marginTop: '16px' }}>
             <p>
               Existing User? <Link to="/login" style={{ color: '#e23744' }}>Login Here</Link>

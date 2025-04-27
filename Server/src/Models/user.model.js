@@ -20,7 +20,15 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: 'user',
     },
-    }, { timestamps: true });
+    otp: {
+        type: String,
+        default: null,
+    },
+    otpExpiry: {
+        type: Date,
+        default: null,
+    },
+});
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
