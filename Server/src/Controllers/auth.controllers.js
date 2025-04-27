@@ -1,6 +1,7 @@
 const User = require("../Models/User.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const sendEmail = require("../Utils/NotificationUtils");
 
 const onLogin = async(req, res) => {
     const {email, password} = req.body;
@@ -90,6 +91,8 @@ const onLogin = async(req, res) => {
 
         const otp = otpGenerator();
         console.log("Generated OTP:", otp);
+
+        sendEmail(email)
 
         return res.status(200).json({ success: true, message: `Otp Sent Successfully on email id ${email}`});
     } catch (error) {

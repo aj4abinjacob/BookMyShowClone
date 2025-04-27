@@ -21,10 +21,10 @@ mongoose.connect(dbUrl).then(() => {
 }
 );
 
-const authRoutes = require("./Routes/auth.routes");
-const movieRoutes = require("./Routes/movies.routes");
-const theatreRoutes = require("./Routes/theatre.routes");
-const showRoutes = require("./Routes/show.routes");
+const authRoutes = require("./src/Routes/auth.routes");
+const movieRoutes = require("./src/Routes/movies.routes");
+const theatreRoutes = require("./src/Routes/theatre.routes");
+const showRoutes = require("./src/Routes/show.routes");
 
 authRoutes(app);
 movieRoutes(app);
