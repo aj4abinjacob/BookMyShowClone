@@ -4,11 +4,14 @@ import MovieList from "../../Components/MovieList";
 import NavBar from "../../Components/NavBar/NavBar";
 import { Input, Row, Col } from "antd";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
 
   const [movies, setMovies] = useState([]);  // Initialize as empty array instead of null
   const [loading, setLoading] = useState(true);  // Add loading state
+
+  const navigate = useNavigate();
 
   const fetchMovies = async () => {
     try {
@@ -55,7 +58,9 @@ function Home() {
                   alt={movie.movieName}
                   style={{ width: "100%", height: "300px", objectFit: "cover" }}
                 />
-                <h3>{movie.movieName}</h3>
+                <h3 className="cursor-pointer" onClick={()=>{
+                  navigate(`/movie/${movie._id}`);
+                }}>{movie.movieName}</h3>
                 <p>{movie.description}</p>
                 <p>Genre: {movie.genre.join(", ")}</p>
                 <p>Duration: {movie.duration} minutes</p>
