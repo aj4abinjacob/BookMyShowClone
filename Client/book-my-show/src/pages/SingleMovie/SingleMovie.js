@@ -114,7 +114,7 @@ function SingleMovie() {
                             {theaterInfo.showtimes.map((showtime, idx) => (
                                 <button 
                                 key={idx} 
-                                onClick={() => navigate(`/booking/${showtime.id}`)}
+                                onClick={() => navigate(`/movie/${params.id}/book-show/${showtime.id}`)}
                                 style={{ padding: "8px 12px", margin: "5px" }}
                                 >
                                 {showtime.time} 
