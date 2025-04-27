@@ -2,11 +2,29 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Input, Form, Button, Card, Typography } from 'antd';
 import { ForgotPassword } from '../../calls/user'; 
+import { message } from 'antd';
 
 
 const { Title } = Typography;
 
+
 const ForgetPassword = () => {
+const [messageApi, contextHolder] = message.useMessage();
+
+    const onForgot = async (values) => {
+        const response = await ForgotPassword(values);
+        if (response.data.success) {
+          messageApi.success(response.data.message);
+        //   window.location.href = "/login";
+          // Redirect to login page or show success message
+        }
+        else {
+          console.log(response);
+          messageApi.error(response.data.message);
+          // Show error message
+        }
+      }
+
   return (
     <div style={{
       display: 'flex',
@@ -15,6 +33,7 @@ const ForgetPassword = () => {
       minHeight: '100vh',
       padding: '20px'
     }}>
+        {contextHolder}
       <Card className="shadow-md" style={{ width: '500px' }}>
         <div
           style={{
@@ -36,7 +55,7 @@ const ForgetPassword = () => {
             name="book-my-show-forgot-password"
             layout="vertical"
             requiredMark={false}
-            onFinish={ForgotPassword}
+            onFinish={onForgot}
           >
             <Form.Item
               label="Email"
