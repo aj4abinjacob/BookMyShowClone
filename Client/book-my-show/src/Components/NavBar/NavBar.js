@@ -1,12 +1,13 @@
 import React from 'react';
 import {  Layout, Menu } from 'antd';
+import { Link } from 'react-router-dom';
 
 const { Header } = Layout;
 
 function NavBar() {
   const items = [
     { key: 'user', label: 'User' },
-    { key: 'home', label: 'Home' },
+    { key: 'home', label: <Link to="/">Home</Link>  },
   ];
 
   return (
