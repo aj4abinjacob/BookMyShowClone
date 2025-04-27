@@ -37,10 +37,14 @@ function Home() {
         </Col>
       </Row>
       <Row>
-        {movies.length > 0 &&
+        {loading ? (
+          <Col span={24} style={{ textAlign: 'center', marginTop: '50px' }}>
+            Loading movies...
+          </Col>
+        ) : movies && movies.length > 0 ? (
           movies.map((movie) => (
             <Col
-              key={movie._id} // MongoDB gives `_id`
+              key={movie._id}
               lg={{ span: 6 }}
               xs={{ span: 12 }}
               style={{ marginTop: "20px" }}
@@ -53,16 +57,18 @@ function Home() {
                 />
                 <h3>{movie.movieName}</h3>
                 <p>{movie.description}</p>
-                <p>Genre: {movie.genre.join(", ")}</p> {/* genre is an array */}
+                <p>Genre: {movie.genre.join(", ")}</p>
                 <p>Duration: {movie.duration} minutes</p>
                 <p>Language: {movie.language}</p>
-                <p>
-                  Release Date:{" "}
-                  {new Date(movie.releaseDate).toLocaleDateString()}
-                </p>
+                <p>Release Date: {new Date(movie.releaseDate).toLocaleDateString()}</p>
               </div>
             </Col>
-          ))}
+          ))
+        ) : (
+          <Col span={24} style={{ textAlign: 'center', marginTop: '50px' }}>
+            No movies found.
+          </Col>
+        )}
       </Row>
 
     </div>
