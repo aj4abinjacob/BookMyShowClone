@@ -17,8 +17,7 @@ function Home() {
     try {
       setLoading(true);
       const response = await getAllMovies();
-      // Make sure you're accessing the data correctly based on your API response
-      setMovies(response.data.movies); // Changed from response.data.data to response.data.movies
+      setMovies(response.data.movies); 
       setLoading(false);
     } catch (error) {
       console.error("Error fetching movies:", error);
