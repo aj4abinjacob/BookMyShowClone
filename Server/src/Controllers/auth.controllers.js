@@ -2,6 +2,7 @@ const User = require("../Models/User.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../Utils/NotificationUtils");
+const otpScript = require("../Scripts/otpScript");
 
 const onLogin = async(req, res) => {
     const {email, password} = req.body;
@@ -89,10 +90,11 @@ const onLogin = async(req, res) => {
             return res.status(400).json({ success: false, message: "User not found" });
         }
 
+
         const otp = otpGenerator();
         console.log("Generated OTP:", otp);
 
-        sendEmail(email)
+        sendEmail([user.email], "Reset Password for BookMyShow Clone", otpScript(user.name, user.email, otp))
 
         return res.status(200).json({ success: true, message: `Otp Sent Successfully on email id ${email}`});
     } catch (error) {
