@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { getAllMovies } from "../../calls/movies";
-import MovieList from "../../Components/MovieList";
 import NavBar from "../../Components/NavBar/NavBar";
 import { Input, Row, Col } from "antd";
 import { useState } from "react";
