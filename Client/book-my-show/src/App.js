@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import SingleMovie from './pages/SingleMovie/SingleMovie';
 import BookShow from './pages/BookShow/BookShow';
+import ForgetPassword from './pages/Forget/Forget';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Route path="/" element={<Home/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
+      <Route path="/forget" element={<ForgetPassword/>} />
       <Route path="/movie/:id" element={<SingleMovie/>} />
       <Route path="/movie/:movieId/book-show/:showId" element={<BookShow/>} />
     </Routes>
