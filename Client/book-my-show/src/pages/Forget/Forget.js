@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Input, Form, Button, Card, Typography } from 'antd';
+import { ForgotPassword } from '../../calls/user'; 
+
 
 const { Title } = Typography;
 
@@ -34,6 +36,7 @@ const ForgetPassword = () => {
             name="book-my-show-forgot-password"
             layout="vertical"
             requiredMark={false}
+            onFinish={ForgotPassword}
           >
             <Form.Item
               label="Email"
@@ -44,6 +47,7 @@ const ForgetPassword = () => {
                 { required: true, message: "Email is required" }, 
                 { type: 'email', message: 'Please enter a valid email' }
               ]}
+              
             >
               <Input
                 id="email"
