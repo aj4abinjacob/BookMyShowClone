@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { getMovieById } from "../../calls/movies";
 import NavBar from "../../Components/NavBar/NavBar";
+import { Flex } from "antd";
+import moment from "moment";
 
 
 function SingleMovie() {
     const [movie, setMovie] = useState(null);
+    const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
     const params = useParams();
 
     const getMovie = async () => {
@@ -26,23 +29,33 @@ function SingleMovie() {
     <div>
         <NavBar />
         {movie && (
-            <div>
-                <h1>{movie.title}</h1>
-                <p>{movie.description}</p>
-                <img src={movie.image} alt={movie.title} />
-            </div>
-        )}
-        {!movie && <p>Loading...</p>}
-        <h1>Movie Details</h1>
-        <h1>Movie Title: {movie ? movie.movieName : "Loading..."}</h1>
-        <h1>Movie Description: {movie ? movie.description : "Loading..."}</h1>
-        <h1>Movie Image: {movie ? <img src={movie.image} alt={movie.title} /> : "Loading..."}</h1>
-        <h1>Movie ID: {movie ? movie._id : "Loading..."}</h1>
-        <h1>Movie Release Date: {movie ? movie.releaseDate : "Loading..."}</h1>
-        <h1>Movie Duration: {movie ? movie.duration : "Loading..."}</h1>
-        <h1>Movie Language: {movie ? movie.language : "Loading..."}</h1>
-        <h1>Movie Genre: {movie ? movie.genre : "Loading..."}</h1>
+            <Flex gap="large" justify="center" align="center" direction="row">
+                <div>
+                    <img src={movie.poster} alt={movie.title} width={200} />
+                </div>
 
+                <div>
+                    <h1>{movie.movieName}</h1>
+                    <p>{movie.language}</p>
+                    <p>{movie.genre}</p>
+                    <p>{movie.duration} minutes</p>
+                    <p>{new Date(movie.releaseDate).toLocaleDateString()}</p>
+                    <h2>About the Movie</h2>
+                    <p>{movie.description}</p>
+                </div>
+                <hr/>
+                <div>
+                    <h2>Book Tickets</h2>
+                    <p>Showtimes and booking options will be available here.</p>
+                    <label>Choose the date</label>
+                    <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                    <p>Selected date: {date}</p>
+                    <p>Available showtimes will be displayed here.</p>
+                </div>
+
+            </Flex>
+        )}
+        
     </div>
   );
 }

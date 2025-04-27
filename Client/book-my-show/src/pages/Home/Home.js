@@ -4,6 +4,7 @@ import NavBar from "../../Components/NavBar/NavBar";
 import { Input, Row, Col } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 function Home() {
 
@@ -65,7 +66,7 @@ function Home() {
                     style={{ width: "100%", height: "300px", objectFit: "cover" }}
                   />
                   <h3 className="cursor-pointer" onClick={() => {
-                    navigate(`/movie/${movie._id}`);
+                    navigate(`/movie/${movie._id}?date=${moment().format("YYYY-MM-DD")}`);
                   }}>{movie.movieName}</h3>
                   <p>{movie.description}</p>
                   <p>Genre: {movie.genre.join(", ")}</p>
