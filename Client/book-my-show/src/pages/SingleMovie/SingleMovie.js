@@ -5,12 +5,14 @@ import { getMovieById } from "../../calls/movies";
 import NavBar from "../../Components/NavBar/NavBar";
 import { Flex } from "antd";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 
 function SingleMovie() {
     const [movie, setMovie] = useState(null);
     const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
     const params = useParams();
+    const navigate = useNavigate();
 
     const getMovie = async () => {
 
@@ -24,6 +26,13 @@ function SingleMovie() {
     useEffect(() => {
         getMovie();
     }, []);
+
+    const handleDateChange = (e) => {
+        const selectedDate = e.target.value;
+        setDate(selectedDate);
+        navigate(`/movie/${params.id}?date=${selectedDate}`);
+    }
+
 
   return (
     <div>
@@ -48,12 +57,14 @@ function SingleMovie() {
                     <h2>Book Tickets</h2>
                     <p>Showtimes and booking options will be available here.</p>
                     <label>Choose the date</label>
-                    <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                    <input type="date" value={date} onChange={(e) => handleDateChange(e)} />
                     <p>Selected date: {date}</p>
                     <p>Available showtimes will be displayed here.</p>
                 </div>
 
             </Flex>
+
+            // Show all the shows
         )}
         
     </div>
