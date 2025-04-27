@@ -15,3 +15,19 @@ export async function getAllMovies() {
         };
     }
 }
+
+export async function getMovieById(id) {
+    console.log("Fetching movie by ID:", id);
+    try {
+        const response = await axiosInstance.get(`/movies/${id}`);
+        console.log("Movie fetched successfully:", response.data);
+        return response;
+    } catch (error) {
+        console.error("Error fetching movie:", error);
+        return {
+            status: error.response?.status || 500,
+            data: error.response?.data || { message: "Unknown error occurred" },
+            error: true
+        };
+    }
+}

@@ -14,6 +14,19 @@ const getAllMovies = async (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 }
+const getMovieById = async (req, res) => {
+    try{
+        const movie = await MovieModel.findById(req.params.id);
+        if (!movie) {
+            return res.status(404).json({ message: "No movies found" });
+        }
+        console.log("All movies fetched:", movie);
+        return res.status(200).json({ message: "Movies fetched successfully", movies: movie });
+    }catch(err){
+        console.error("Error fetching movies:", err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 const createNewMovie = async (req, res) => {
     try{
@@ -83,6 +96,7 @@ const deleteMovieById = async (req, res) => {
 
 module.exports = {
     getAllMovies,
+    getMovieById,
     createNewMovie,
     updateMovieById,
     deleteMovieById
