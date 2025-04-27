@@ -88,12 +88,23 @@ const onLogin = async(req, res) => {
             return res.status(400).json({ success: false, message: "User not found" });
         }
 
-        return res.status(200).json({ success: true, message: "Otp Sent Successfully" });
+        const otp = otpGenerator();
+        console.log("Generated OTP:", otp);
+
+        return res.status(200).json({ success: true, message: `Otp Sent Successfully on email id ${email}`});
     } catch (error) {
         console.error("Error sending password reset link:", error);
         return res.status(500).json({ message: "Server error" });
     }
+
+
   };
+
+
+  function otpGenerator() {
+    const otp = Math.floor((10000 * Math.random()) + 90000);
+    return otp;
+  }
 
 
   
