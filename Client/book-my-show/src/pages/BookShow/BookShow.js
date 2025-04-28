@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getShowDetails } from "../../calls/shows";
-import  { NavBar } from "../../Components/NavBar/NavBar";
+import Navbar from "../../Components/NavBar/NavBar";
 
 function BookShow() {
     const params = useParams();
