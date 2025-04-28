@@ -6,6 +6,7 @@ import { Card, Col, Row, message } from "antd";
 import './BookShow.css';
 import StripeCheckout from "react-stripe-checkout";
 import { makePayment } from "../../calls/booking";
+import { createBooking } from "../../calls/booking";
 
 function BookShow() {
     const params = useParams();
@@ -38,7 +39,23 @@ function BookShow() {
 
         if(response.data.success) {
           messageApi.success("Payment successful! Booking confirmed.");
-          // navigate("/");
+          const bookingData = {
+            show: params.showId,
+            seats: selectedSeats,
+            transactionId: response.data.transactionId,
+          };
+
+          const bookingResponse = await createBooking(bookingData);
+
+          if(bookingResponse.success === true) {
+            messageApi.success("Booking successful!");
+            console.log("Booking response:", bookingResponse);
+            navigate("/");
+          }
+          else {
+            messageApi.error("Booking failed. Please try again.");
+          }
+
         }
         else {
           messageApi.error("Payment failed. Please try again.");

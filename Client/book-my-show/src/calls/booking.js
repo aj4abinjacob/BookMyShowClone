@@ -12,3 +12,14 @@ export async function makePayment(data) {
     throw error;
   }
 }
+
+export async function createBooking(data) {
+  try {
+    const response = await axiosInstance.post("http://localhost:8000/bookings", data);
+    return response;
+  } catch (error) {
+    console.error("Error creating booking:", error);
+    throw error;
+  }
+}
+
