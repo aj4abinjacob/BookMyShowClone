@@ -4,6 +4,7 @@ import { getShowDetails } from "../../calls/shows";
 import Navbar from "../../Components/NavBar/NavBar";
 import { Card, Col, Row, message } from "antd";
 import './BookShow.css';
+import StripeCheckout from "react-stripe-checkout";
 
 function BookShow() {
     const params = useParams();
@@ -21,6 +22,15 @@ function BookShow() {
       } catch(err) {
         console.error("Error fetching show data:", err);
       }
+    }
+
+    const onToken = async (token) => {
+      console.log("Token received:", token);
+      const bookingData = {
+        showId: params.showId,
+        seats: selectedSeats,
+        token: token.id
+      };
     }
 
     useEffect(() => {
@@ -60,7 +70,7 @@ function BookShow() {
           return;
         }
     
-        const updatedSelectedSeats = selectedSeats.filter((seat) => seat != seatNumber);
+        const updatedSelectedSeats = selectedSeats.filter((seat) => seat !== seatNumber);
         setSelectedSeats(updatedSelectedSeats);
       }
     
@@ -179,6 +189,16 @@ function BookShow() {
             <div className="seat-selection-section">
               <h2>Select Your Seats</h2>
               {getSeats()}
+
+              {
+                selectedSeats.length > 0 && (
+                <StripeCheckout 
+                key="stripe-checkout"
+                  token={onToken}
+                  stripeKey={process.env.STRIPE_PUBLIC_KEY}/>
+                  
+                )
+              }
             </div>
           </div>
         )}
