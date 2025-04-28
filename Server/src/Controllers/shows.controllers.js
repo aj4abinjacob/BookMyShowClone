@@ -43,6 +43,38 @@ const getAllShows = async(req, res) => {
 
 }
 
+
+const getShowDetailsByShowId = async (req, res) => {
+    const {showId} = req.params;
+    try {
+      const showDetails = await ShowModel.findById(showId)
+        .populate("theatre")
+        .populate("movie");
+      if (!showDetails) {
+        return res.status(404).json({
+          success: false,
+          message: `Show with ID ${showId} not found`
+        });
+      }
+      console.log("Show details fetched:", showDetails);
+      
+      return res.status(200).json({
+        success: true,
+        message: `Show details fetched for ID ${showId}`,
+        show: showDetails
+      });
+    } catch (err) {
+      console.error("Error fetching show details:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error"
+      });
+    }
+  }
+  
+
+
+
 const getTheatersAndShowsByMovieId = async (req, res) => {
     console.log("Fetching shows")
     const {movieId} = req.params;
@@ -70,5 +102,6 @@ const getTheatersAndShowsByMovieId = async (req, res) => {
 module.exports = {
     createNewShow,
     getAllShows,
-    getTheatersAndShowsByMovieId
+    getTheatersAndShowsByMovieId,
+    getShowDetailsByShowId
 }
