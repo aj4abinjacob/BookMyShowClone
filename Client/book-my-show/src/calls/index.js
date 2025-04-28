@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://bookmyshowclone-u5fb.onrender.com",
   headers: {
     "Content-Type": "application/json"
   }

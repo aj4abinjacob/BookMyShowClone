@@ -1,12 +1,11 @@
 
 import { axiosInstance } from ".";
 
-const API_URL = "http://localhost:8000";
 
 export async function RegisterUser(data) {
     console.log("Registering user with data:", data);
     try{
-        const response = await axiosInstance.post(`${API_URL}/register`, data);
+        const response = await axiosInstance.post(`/register`, data);
         console.log("User registered successfully:", response.data);
         return response;
 
@@ -20,7 +19,7 @@ export async function RegisterUser(data) {
 export async function LoginUser(data) {
     console.log("Logging in user with data:", data);
     try{
-        const response = await axiosInstance.post(`${API_URL}/login`, data);
+        const response = await axiosInstance.post(`/login`, data);
         console.log("User logged in successfully:", response.data);
         return response;
 
@@ -34,7 +33,7 @@ export async function LoginUser(data) {
 export async function ForgotPassword(data) {
     console.log("Requesting password reset with data:", data);
     try{
-        const response = await axiosInstance.post(`${API_URL}/forget`, data);
+        const response = await axiosInstance.post(`/forget`, data);
         console.log("Password reset requested successfully:", response.data);
         return response;
 
@@ -48,7 +47,7 @@ export async function ForgotPassword(data) {
 export async function ResetPassword(data){
     console.log("Resetting password with data:", data);
     try{
-      const response = await axiosInstance.post(`${API_URL}/reset`, {
+      const response = await axiosInstance.post(`/reset`, {
         email: data.email,
         otp: data.otp,
         password: data.password
