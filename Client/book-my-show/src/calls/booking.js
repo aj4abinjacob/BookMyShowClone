@@ -1,0 +1,14 @@
+import { axiosInstance } from ".";
+
+export async function makePayment(data) {
+  try {
+    const response = await axiosInstance.post("http://localhost:8000/payment", 
+        {token: data.token.id,
+        amount: data.amount}
+    );
+    return response;
+  } catch (error) {
+    console.error("Error making payment:", error);
+    throw error;
+  }
+}

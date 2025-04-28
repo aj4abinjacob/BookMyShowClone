@@ -5,12 +5,14 @@ import Navbar from "../../Components/NavBar/NavBar";
 import { Card, Col, Row, message } from "antd";
 import './BookShow.css';
 import StripeCheckout from "react-stripe-checkout";
+import { makePayment } from "../../calls/booking";
 
 function BookShow() {
     const params = useParams();
     const navigate = useNavigate();
     const [showDetails, setShowDetails] = useState(null);
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const [messageApi, contextHolder] = message.useMessage();
 
     const fetchShowData = async () => {
       try {
@@ -25,12 +27,27 @@ function BookShow() {
     }
 
     const onToken = async (token) => {
-      console.log("Token received:", token);
-      const bookingData = {
-        showId: params.showId,
-        seats: selectedSeats,
-        token: token.id
-      };
+
+      try{
+        console.log("Token received:", token);
+        const response = await makePayment({
+          token,
+          amount: selectedSeats.length * showDetails.ticketPrice * 100,
+        });
+        console.log("Payment response:", response);
+
+        if(response.data.success) {
+          messageApi.success("Payment successful! Booking confirmed.");
+          // navigate("/");
+        }
+        else {
+          messageApi.error("Payment failed. Please try again.");
+        }
+
+      }catch(err) {
+        console.error("Error making payment:", err);
+        messageApi.error("Payment failed. Please try again.");
+      }
     }
 
     useEffect(() => {
@@ -145,6 +162,7 @@ function BookShow() {
     return (
       <>
         <Navbar />
+        {contextHolder}
         {showDetails && (
           <div className="bookshow-container">
             <Row gutter={[24, 24]}>
@@ -195,7 +213,7 @@ function BookShow() {
                 <StripeCheckout 
                 key="stripe-checkout"
                   token={onToken}
-                  stripeKey={process.env.STRIPE_PUBLIC_KEY}/>
+                  stripeKey="pk_test_51RItpAPs6SzZXfwZ7WJhrtrHoHJQgEKFiqqjRfzRlKT9HbCxrjUxThumz8kwt5i5uprYZF0FubKJVJ1naO2o0e3m00dy9iplAV"/>
                   
                 )
               }
