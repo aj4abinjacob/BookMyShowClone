@@ -40,8 +40,15 @@ function BookShow() {
         {showDetails && (
           <div>
             <Row gutter={24}>
+      
               <Col span={24}>
+              <img 
+                src={showDetails.movie.poster} 
+                alt={showDetails.movie.movieName}
+                style={{ width: '200px'}}
+              />
                 <Card
+                
                   title={
                     <div>
                       <h1>{showDetails.movie.movieName}</h1>
