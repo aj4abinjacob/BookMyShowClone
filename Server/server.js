@@ -35,7 +35,9 @@ const limiter = rateLimit({
 }
 );
 app.use(limiter);
-app.use(mongooseSanitizer());
+app.use(mongooseSanitizer({
+    replaceWith: '_'
+}));
 
 
 const authRoutes = require("./src/Routes/auth.routes");
