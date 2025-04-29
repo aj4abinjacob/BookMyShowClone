@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit');
 var bodyParser = require('body-parser');
+const mongooseSanitizer = require('express-mongo-sanitize');
 
 var cors = require('cors')
 require('dotenv').config();
@@ -14,6 +15,11 @@ const dbUrl = process.env.DB_URL;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(mongooseSanitizer(
+    {
+        replaceWith: '_'
+    }
+));
 
 mongoose.connect(dbUrl).then(() => {
     console.log("MongoDB connected");
