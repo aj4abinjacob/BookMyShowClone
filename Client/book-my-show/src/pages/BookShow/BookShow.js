@@ -47,7 +47,7 @@ function BookShow() {
 
           const bookingResponse = await createBooking(bookingData);
 
-          if(bookingResponse.success === true) {
+          if(bookingResponse.data.success === true) {
             messageApi.success("Booking successful!");
             console.log("Booking response:", bookingResponse);
             navigate("/");
