@@ -15,11 +15,6 @@ const dbUrl = process.env.DB_URL;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(mongooseSanitizer(
-    {
-        replaceWith: '_'
-    }
-));
 
 mongoose.connect(dbUrl).then(() => {
     console.log("MongoDB connected");
@@ -31,7 +26,7 @@ mongoose.connect(dbUrl).then(() => {
 
 const limiter = rateLimit({
     windowMs: 5*1000, // 5 seconds
-    max: 2, // 5 requests per windowMs
+    max: 10, // 5 requests per windowMs
     message: {
         status:429,
         error: "Too many requests.",
@@ -40,6 +35,8 @@ const limiter = rateLimit({
 }
 );
 app.use(limiter);
+app.use(mongooseSanitizer());
+
 
 const authRoutes = require("./src/Routes/auth.routes");
 const movieRoutes = require("./src/Routes/movies.routes");
