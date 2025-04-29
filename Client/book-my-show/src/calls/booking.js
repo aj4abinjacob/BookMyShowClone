@@ -2,7 +2,7 @@ import { axiosInstance } from ".";
 
 export async function makePayment(data) {
   try {
-    const response = await axiosInstance.post("http://localhost:8000/payment", 
+    const response = await axiosInstance.post("/payment", 
         {token: data.token.id,
         amount: data.amount}
     );
