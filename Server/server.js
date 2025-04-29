@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
 var bodyParser = require('body-parser');
+
 var cors = require('cors')
 require('dotenv').config();
 
@@ -20,6 +22,18 @@ mongoose.connect(dbUrl).then(() => {
     console.log("MongoDB connection error:", err);
 }
 );
+
+const limiter = rateLimit({
+    windowMs: 5*1000, // 5 seconds
+    max: 2, // 5 requests per windowMs
+    message: {
+        status:429,
+        error: "Too many requests.",
+        message: "Too many requests, please try again later."
+    }
+}
+);
+app.use(limiter);
 
 const authRoutes = require("./src/Routes/auth.routes");
 const movieRoutes = require("./src/Routes/movies.routes");
