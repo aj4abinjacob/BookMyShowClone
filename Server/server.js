@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit');
 var bodyParser = require('body-parser');
-const mongooseSanitizer = require('express-mongo-sanitize');
+// const mongooseSanitizer = require('express-mongo-sanitize');
 
 var cors = require('cors')
 require('dotenv').config();
@@ -35,9 +35,23 @@ const limiter = rateLimit({
 }
 );
 app.use(limiter);
-app.use(mongooseSanitizer({
-    replaceWith: '_'
-}));
+// app.use(mongooseSanitizer({
+//     replaceWith: '_'
+// }));
+
+// Simple MongoDB operator sanitizer
+app.use((req, res, next) => {
+    if (req.body) {
+      const sanitize = (obj) => {
+        for (const key in obj) {
+          if (key.startsWith('$')) delete obj[key];
+          else if (typeof obj[key] === 'object') sanitize(obj[key]);
+        }
+      };
+      sanitize(req.body);
+    }
+    next();
+  });
 
 
 const authRoutes = require("./src/Routes/auth.routes");
