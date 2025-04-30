@@ -171,6 +171,19 @@ function BookShow() {
             <div className="flex-shrink-0 ms-3">
               Total Price: <span>Rs. {selectedSeats.length * showDetails.ticketPrice}</span>
             </div>
+            {selectedSeats.length > 0 && (
+              <div className="payment-button-container">
+                 <StripeCheckout
+                    key="stripe-checkout"
+                    token={onToken}
+                    stripeKey="pk_test_51RItpAPs6SzZXfwZ7WJhrtrHoHJQgEKFiqqjRfzRlKT9HbCxrjUxThumz8kwt5i5uprYZF0FubKJVJ1naO2o0e3m00dy9iplAV"
+                    amount={selectedSeats.length * showDetails.ticketPrice * 100}
+                    currency="INR"
+                  >
+                   <button className="stripe-button-custom">Pay with Card</button>
+                 </StripeCheckout>
+              </div>
+             )}
           </div>
         </div>
       );
@@ -226,6 +239,8 @@ function BookShow() {
               {getSeats()}
 
               {
+                /* Stripe Checkout is now rendered inside getSeats() */
+                /*
                 selectedSeats.length > 0 && (
                 <StripeCheckout 
                 key="stripe-checkout"
@@ -233,6 +248,7 @@ function BookShow() {
                   stripeKey="pk_test_51RItpAPs6SzZXfwZ7WJhrtrHoHJQgEKFiqqjRfzRlKT9HbCxrjUxThumz8kwt5i5uprYZF0FubKJVJ1naO2o0e3m00dy9iplAV"/>
                   
                 )
+                */
               }
             </div>
           </div>
