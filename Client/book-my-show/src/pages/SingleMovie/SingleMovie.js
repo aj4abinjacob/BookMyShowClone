@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { getMovieById } from "../../calls/movies";
 import NavBar from "../../Components/NavBar/NavBar";
-import { Flex } from "antd";
+import { Flex, Button } from "antd";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { getShowsForMovie } from "../../calls/shows";
@@ -112,13 +112,15 @@ function SingleMovie() {
                             <h4>{theaterInfo.theater.name} - {theaterInfo.theater.location}</h4>
                             <div style={{ display: "flex", gap: "10px" }}>
                             {theaterInfo.showtimes.map((showtime, idx) => (
-                                <button 
-                                key={idx} 
+                                <Button
+                                key={idx}
                                 onClick={() => navigate(`/movie/${params.id}/book-show/${showtime.id}`)}
-                                style={{ padding: "8px 12px", margin: "5px" }}
+                                color="default"
+                                variant="dashed"
+                                style={{ margin: "5px" }}
                                 >
-                                {showtime.time} 
-                                </button>
+                                {showtime.time}
+                                </Button>
                             ))}
                             </div>
                         </div>
