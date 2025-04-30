@@ -83,12 +83,42 @@ function Home() {
                       borderRadius: '4px'
                     }}
                   />
-                  <h3>{movie.movieName}</h3>
-                  <p>{movie.description}</p>
-                  <p>Genre: {movie.genre.join(", ")}</p>
-                  <p>Duration: {movie.duration} minutes</p>
-                  <p>Language: {movie.language}</p>
-                  <p>Release Date: {new Date(movie.releaseDate).toLocaleDateString()}</p>
+                  <h3 style={{ 
+                    color: '#1a1a1a',
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    marginBottom: '8px'
+                  }}>{movie.movieName}</h3>
+                  <p style={{ 
+                    color: '#666666',
+                    fontSize: '14px',
+                    marginBottom: '8px',
+                    lineHeight: '1.4'
+                  }}>{movie.description}</p>
+                  <p style={{ 
+                    color: '#1a1a1a',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    marginBottom: '4px'
+                  }}>Genre: <span style={{ color: '#666666', fontWeight: '400' }}>{movie.genre.join(", ")}</span></p>
+                  <p style={{ 
+                    color: '#1a1a1a',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    marginBottom: '4px'
+                  }}>Duration: <span style={{ color: '#666666', fontWeight: '400' }}>{movie.duration} minutes</span></p>
+                  <p style={{ 
+                    color: '#1a1a1a',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    marginBottom: '4px'
+                  }}>Language: <span style={{ color: '#666666', fontWeight: '400' }}>{movie.language}</span></p>
+                  <p style={{ 
+                    color: '#1a1a1a',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    marginBottom: '4px'
+                  }}>Release Date: <span style={{ color: '#666666', fontWeight: '400' }}>{new Date(movie.releaseDate).toLocaleDateString()}</span></p>
                 </div>
               </Col>
             ))
