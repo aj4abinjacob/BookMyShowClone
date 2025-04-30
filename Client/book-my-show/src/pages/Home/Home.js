@@ -59,15 +59,31 @@ function Home() {
                 xs={{ span: 12 }}
                 style={{ marginTop: "20px" }}
               >
-                <div className="movie-card">
+                <div 
+                  className="movie-card" 
+                  onClick={() => {
+                    navigate(`/movie/${movie._id}?date=${moment().format("YYYY-MM-DD")}`);
+                  }}
+                  style={{ 
+                    borderRadius: '8px', 
+                    overflow: 'hidden',
+                    backgroundColor: '#f8f9fa',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    padding: '12px',
+                    transition: 'transform 0.2s ease-in-out',
+                    cursor: 'pointer'
+                  }}>
                   <img
                     src={movie.poster}
                     alt={movie.movieName}
-                    style={{ width: "100%", height: "300px", objectFit: "cover" }}
+                    style={{ 
+                      width: "100%", 
+                      height: "300px", 
+                      objectFit: "cover",
+                      borderRadius: '4px'
+                    }}
                   />
-                  <h3 className="cursor-pointer" onClick={() => {
-                    navigate(`/movie/${movie._id}?date=${moment().format("YYYY-MM-DD")}`);
-                  }}>{movie.movieName}</h3>
+                  <h3>{movie.movieName}</h3>
                   <p>{movie.description}</p>
                   <p>Genre: {movie.genre.join(", ")}</p>
                   <p>Duration: {movie.duration} minutes</p>
