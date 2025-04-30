@@ -14,6 +14,7 @@ const Login = () => {
         messageApi.success("Login successful!");
         // Store user data in local storage or context
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", response.data.user.name || response.data.user.email);
         window.location.href = "/";
         console.log("User logged in successfully:", response.data);
         // Redirect to home page or show success message

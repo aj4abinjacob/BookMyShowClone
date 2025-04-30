@@ -1,13 +1,41 @@
 import React from 'react';
-import {  Layout, Menu } from 'antd';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Dropdown } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
 function NavBar() {
+  const navigate = useNavigate();
+  const userName = localStorage.getItem('userName') || 'User';
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    navigate('/login');
+  };
+
+  const userMenuItems = [
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: 'Logout',
+      onClick: handleLogout
+    }
+  ];
+
   const items = [
-    { key: 'user', label: 'User' },
-    { key: 'home', label: <Link to="/">Home</Link>  },
+    { 
+      key: 'user', 
+      label: (
+        <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+          <div style={{ color: 'white', cursor: 'pointer' }}>
+            <UserOutlined /> {userName}
+          </div>
+        </Dropdown>
+      )
+    },
+    { key: 'home', label: <Link to="/">Home</Link> },
   ];
 
   return (
@@ -28,7 +56,6 @@ function NavBar() {
           />
         </div>
       </Header>
-
     </Layout>
   );
 }
