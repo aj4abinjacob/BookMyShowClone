@@ -42,7 +42,7 @@ const Login = () => {
         {/* Header Section with the Book My Show branding */}
         <div 
           style={{ 
-            backgroundColor: '#e23744', 
+            backgroundColor: '#001529',
             margin: '-24px -24px 0 -24px',
             padding: '16px',
             textAlign: 'center',
@@ -96,7 +96,7 @@ const Login = () => {
                 block
                 htmlType="submit"
                 style={{ 
-                  backgroundColor: '#e23744', 
+                  backgroundColor: '#001529',
                   fontSize: "1rem", 
                   fontWeight: "600" 
                 }}
@@ -108,10 +108,10 @@ const Login = () => {
           
           <div style={{ textAlign: 'center', marginTop: '16px' }}>
             <p>
-              New User? <Link to="/register" style={{ color: '#e23744' }}>Register Here</Link>
+              New User? <Link to="/register" style={{ color: '#001529' }}>Register Here</Link>
             </p>
             <p>
-              Forget Password? <Link to="/forget" style={{ color: '#e23744' }}>Click Here</Link>
+              Forget Password? <Link to="/forget" style={{ color: '#001529' }}>Click Here</Link>
             </p>
           </div>
         </div>

@@ -42,7 +42,7 @@ const Register = () => {
         {/* Red header section like the one in Login, following the same login pattern*/}
         <div 
           style={{ 
-            backgroundColor: '#e23744', 
+            backgroundColor: '#001529',
             margin: '-24px -24px 0 -24px',
             padding: '16px',
             textAlign: 'center',
@@ -114,7 +114,7 @@ const Register = () => {
                 block
                 htmlType="submit"
                 style={{ 
-                  backgroundColor: '#e23744', 
+                  backgroundColor: '#001529',
                   fontSize: "1rem", 
                   fontWeight: "600",
                   // oops, margin not needed but left it here
@@ -129,7 +129,7 @@ const Register = () => {
           {/* Link to login page */}
           <div style={{ textAlign: 'center', marginTop: '16px' }}>
             <p>
-              Already a user? <Link to="/login" style={{ color: '#e23744' }}>Login</Link>
+              Already a user? <Link to="/login" style={{ color: '#001529' }}>Login</Link>
             </p>
             {/* Left an extra empty paragraph by accident */}
             <p>
