@@ -14,7 +14,9 @@ function NavBar() {
     <Layout>
       <Header style={{ display: 'flex', alignItems: 'center' }}>
         <div className="demo-logo" />
-        <h3 style={{ color: 'white', margin: 0, flex: 'none', marginRight: '20px' }}>Book My Show</h3>
+        <h3 style={{ color: 'white', margin: 0, flex: 'none', marginRight: '20px' }}>
+          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Book My Show</Link>
+        </h3>
 
         <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
           <Menu
